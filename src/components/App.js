@@ -1,19 +1,30 @@
 import React from 'react';
 import qs from 'query-string';
 import { connect } from 'react-redux';
-import { authenticate } from '../actions/actions';
 import { Route } from 'react-router-dom';
 import Header from './header';
+import jwtDecode from 'jwt-decode';
+
+import { setAuthToken, authSuccess } from '../actions/auth-actions';
+import { saveAuthToken } from '../local-storage';
+import { AuthorizationPage } from './authorization-page';
 
 export class App extends React.Component {
   componentDidMount() {
-    console.log(this.props.authToken);
-    this.props.dispatch(authenticate());
+    if (this.props.authToken) {
+      const decodedToken = jwtDecode(this.props.authToken);
+      this.props.dispatch(setAuthToken(this.props.authToken));
+      this.props.dispatch(authSuccess(decodedToken.user));
+      saveAuthToken(this.props.authToken);
+    }
   }
 
   render() {
     return (
-      <Route path='/' component={Header} />
+      <div>
+        <Route path="/auth" component={AuthorizationPage} />
+        <Header />
+      </div>
     );
   }
 }
