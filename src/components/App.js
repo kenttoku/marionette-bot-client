@@ -8,6 +8,7 @@ import jwtDecode from 'jwt-decode';
 import { setAuthToken, authSuccess } from '../actions/auth-actions';
 import { saveAuthToken } from '../local-storage';
 import { AuthorizationPage } from './authorization-page';
+import GuildList from './guild-list';
 
 export class App extends React.Component {
   componentDidMount() {
@@ -20,10 +21,12 @@ export class App extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <Route path="/auth" component={AuthorizationPage} />
         <Header />
+        <GuildList />
       </div>
     );
   }
