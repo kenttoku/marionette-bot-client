@@ -7,4 +7,4 @@ export function LoginButton() {
   );
 }
 
-export default connect()(LoginButton);
+export default LoginButton;
