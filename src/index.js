@@ -8,7 +8,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-import App from './components/App';
+import App from './components/app';
 import store from './store';
 import './index.css';
 

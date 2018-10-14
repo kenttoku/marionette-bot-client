@@ -2,13 +2,13 @@ import React from 'react';
 import qs from 'query-string';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
-import Header from './header';
 import jwtDecode from 'jwt-decode';
 
 import { setAuthToken, authSuccess } from '../actions/auth-actions';
 import { saveAuthToken } from '../local-storage';
 import { AuthorizationPage } from './authorization-page';
 import GuildList from './guild-list';
+import LoginButton from './login-button.js';
 
 export class App extends React.Component {
   componentDidMount() {
@@ -23,9 +23,9 @@ export class App extends React.Component {
   render() {
     console.log(this.props);
     return (
-      <div>
+      <div className="app">
         <Route path="/auth" component={AuthorizationPage} />
-        <Header />
+        <LoginButton />
         <GuildList />
       </div>
     );
