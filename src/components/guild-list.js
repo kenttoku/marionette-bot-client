@@ -1,21 +1,12 @@
 import React from 'react';
-import { gql } from 'apollo-boost';
 import { graphql } from 'react-apollo';
 import requiresLogin from './requires-login.js';
-
-const getGuildsQuery = gql`
-  {
-    guilds {
-      name
-      id
-    }
-  }
-`;
+import { getGuildsQuery } from '../querys';
 
 class GuildList extends React.Component {
   displayGuilds() {
     const data = this.props.data;
-    if (data.loading) {
+    if (data.loading || !data.guilds) {
       return (<option>Loading...</option>);
     } else {
       return data.guilds.map(guild => {
@@ -25,6 +16,7 @@ class GuildList extends React.Component {
       });
     }
   }
+
   render() {
 
     return (

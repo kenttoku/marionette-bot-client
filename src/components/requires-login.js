@@ -8,6 +8,7 @@ export default () => Component => {
     if (authenticating) {
       return <div>Logging in...</div>;
     } else if (!loggedIn || error) {
+      console.log('ran');
       return <Redirect to="/" />;
     }
 
@@ -18,9 +19,9 @@ export default () => Component => {
   RequiresLogin.displayName = `RequiresLogin(${displayName})`;
 
   const mapStateToProps = state => ({
-    authenticating: state.auth.loading,
-    loggedIn: state.auth.currentUser !== null,
-    error: state.auth.error
+    authenticating: state.loading,
+    loggedIn: state.currentUser !== null,
+    error: state.error
   });
 
   return connect(mapStateToProps)(RequiresLogin);
