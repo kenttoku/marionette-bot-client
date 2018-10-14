@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 
-import { setAuthToken, authSuccess } from '../actions/auth-actions';
+import { authSuccess } from '../actions/auth-actions';
 import { saveAuthToken } from '../local-storage';
 import { AuthorizationPage } from './authorization-page';
 import GuildList from './guild-list';
@@ -12,11 +12,11 @@ import LoginButton from './login-button.js';
 
 export class App extends React.Component {
   componentDidMount() {
-    if (this.props.authToken) {
-      const decodedToken = jwtDecode(this.props.authToken);
-      this.props.dispatch(setAuthToken(this.props.authToken));
+    const authToken = qs.parse(this.props.location.search).token;
+    if (authToken) {
+      const decodedToken = jwtDecode(authToken);
       this.props.dispatch(authSuccess(decodedToken.user));
-      saveAuthToken(this.props.authToken);
+      saveAuthToken(authToken);
     }
   }
 
@@ -33,7 +33,7 @@ export class App extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  authToken: qs.parse(props.location.search).token
+  currentUser: state.currentUser
 });
 
 export default connect(mapStateToProps)(App);

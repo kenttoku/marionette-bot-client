@@ -2,12 +2,6 @@
 // import { normalizeResponseErrors } from './utils';
 // import { clearAuthToken } from '../local-storage';
 
-export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
-export const setAuthToken = authToken => ({
-  type: SET_AUTH_TOKEN,
-  authToken
-});
-
 export const CLEAR_AUTH = 'CLEAR_AUTH';
 export const clearAuth = () => ({
   type: CLEAR_AUTH

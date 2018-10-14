@@ -6,7 +6,7 @@ export class AuthorizationPage extends React.Component {
   render() {
     return (
       <div>
-        <Redirect to="/" />
+        <Redirect to="/dashboard" />
       </div>
     );
   }
