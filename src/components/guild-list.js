@@ -12,12 +12,24 @@ const getGuildsQuery = gql`
 `;
 
 class GuildList extends React.Component {
+  displayGuilds() {
+    const data = this.props.data;
+    if (data.loading) {
+      return (<div>Loading...</div>);
+    } else {
+      return data.guilds.map(guild => {
+        return (
+          <li key={guild.id}>{guild.name}</li>
+        );
+      });
+    }
+  }
   render() {
-    console.log(this.props);
+
     return (
       <div>
         <ul id="guild-list">
-          <li>Guild Name</li>
+          {this.displayGuilds()}
         </ul>
       </div>
     );
