@@ -5,9 +5,7 @@ import { Redirect } from 'react-router-dom';
 export class AuthorizationPage extends React.Component {
   render() {
     return (
-      <div>
-        <Redirect to="/dashboard" />
-      </div>
+      <Redirect to="/dashboard" />
     );
   }
 }

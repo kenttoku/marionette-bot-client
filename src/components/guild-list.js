@@ -1,6 +1,5 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import requiresLogin from './requires-login.js';
 import { getGuildsQuery } from '../querys';
 
 class GuildList extends React.Component {
