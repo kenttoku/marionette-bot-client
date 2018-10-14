@@ -1,9 +1,9 @@
 import React from 'react';
 
-function LoginButton() {
+function Auth() {
   return (
     <a href="http://localhost:8080/auth/discord">Log in with discord </a>
   );
 }
 
-export default LoginButton;
+export default Auth;
