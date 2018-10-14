@@ -45,7 +45,21 @@ const resolvers = {
   }
 };
 
-const stateLink = withClientState({ cache, resolvers, defaults });
+const typeDefs = `
+  type AuthToken {
+    authToken: String!
+  }
+
+  type Mutation {
+    setAuthToken(authToken: String!): AuthToken
+  }
+
+  type Query {
+    authToken: AuthToken
+  }
+`;
+
+const stateLink = withClientState({ cache, resolvers, defaults, typeDefs });
 
 const client = new ApolloClient({
   link: ApolloLink.from([stateLink, authLink.concat(httpLink)]),
