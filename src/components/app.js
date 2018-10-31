@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import queryString from 'query-string';
+import React, { Component } from 'react';
+import { withApollo } from 'react-apollo';
+import { Link, Route } from 'react-router-dom';
+
 import { saveAuthToken } from '../local-storage';
 import GuildList from './guild-list';
 
@@ -9,11 +12,15 @@ class App extends Component {
     let query = queryString.parse(this.props.location.search);
     if (query.token) {
       saveAuthToken(query.token);
+      const decodedToken = jwtDecode(query.token);
+      this.props.client.cache.writeData({ data: { currentUser: decodedToken.user } });
       this.props.history.push('/');
     }
+
   }
 
   render() {
+    console.log(this.props.client.cache);
     return (
       <div className="app">
         <a href="http://localhost:8080/auth/discord">Sign In With Discord</a>
@@ -25,4 +32,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withApollo(App);

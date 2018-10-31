@@ -1,7 +1,16 @@
 import React from 'react';
 import requiresLogin from './requires-login';
 import { graphql } from 'react-apollo';
-import { getGuildsQuery } from '../apollo/queries';
+import gql from 'graphql-tag';
+
+const getGuildsQuery = gql`
+  {
+    guilds {
+      name
+      discordId
+    }
+  }
+`;
 
 class GuildList extends React.Component {
   displayGuilds() {
@@ -11,7 +20,7 @@ class GuildList extends React.Component {
     } else {
       return data.guilds.map(guild => {
         return (
-          <option key={guild.id}>{guild.name}</option>
+          <option key={guild.discordId}>{guild.name}</option>
         );
       });
     }
