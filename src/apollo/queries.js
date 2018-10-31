@@ -4,7 +4,6 @@ export const getGuildsQuery = gql`
   {
     guilds {
       name
-      id
     }
   }
 `;
