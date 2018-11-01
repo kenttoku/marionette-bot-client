@@ -8,6 +8,10 @@ const getGuildsQuery = gql`
     guilds {
       name
       discordId
+      channels {
+        name
+        discordId
+      }
     }
   }
 `;
@@ -16,21 +20,31 @@ class GuildList extends React.Component {
   displayGuilds() {
     const data = this.props.data;
     if (data.loading || !data.guilds) {
-      return (<option>Loading...</option>);
+      return (<li>Loading...</li>);
     } else {
       return data.guilds.map(guild => {
         return (
-          <option key={guild.discordId}>{guild.name}</option>
+          <li key={`guild-${guild.discordId}`}>{guild.name}
+            <ul>{this.displayChannels(guild)}</ul>
+          </li>
         );
       });
     }
   }
 
+  displayChannels(guild) {
+    return guild.channels.map(channel => {
+      return (
+        <li key={`channel-${channel.discordId}`}>{channel.name}</li>
+      );
+    });
+  }
+
   render() {
     return (
-      <select id="guild-list">
+      <ul id="guild-list">
         {this.displayGuilds()}
-      </select>
+      </ul>
     );
   }
 }
