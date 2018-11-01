@@ -1,28 +1,51 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const createMessage = gql`
-  mutation {
+  mutation(
+    $content: String!, 
+    $userId: String!, 
+    $channelId: String!, 
+    $guildId: String!
+  ) {
     createMessage(
       data: {
-        content: "hello"
-        userId: "12345"
-        channelId: "testing"
-        guildId: "guildid"
+        content: $content
+        userId: $userId
+        channelId: $channelId
+        guildId: $guildId
       }
     ) {
-      content
+    content
     }
   }
 `;
 
 class MessageForm extends Component {
+  submitForm(e) {
+    e.preventDefault();
+    this.props.createMessage({
+      variables: {
+        content: this.props.client.cache.data.data.ROOT_QUERY.message,
+        userId: this.props.client.cache.data.data.ROOT_QUERY.userId,
+        channelId: '496750314205085726',
+        guildId: 'blah'
+      }
+    });
+  }
+
+  changeMessage(e) {
+    this.props.client.cache.writeData({
+      data: { message: e.target.value }
+    });
+  }
+
   render() {
     return (
-      <form>
+      <form onSubmit={e => this.submitForm(e)}>
         <label htmlFor="message">Message</label>
-        <input type="textfield"></input>
+        <input type="text" id="message" onChange={e => this.changeMessage(e)} />
         <button type="submit">Submit</button>
       </form>
     );
@@ -30,4 +53,4 @@ class MessageForm extends Component {
 }
 
 
-export default graphql()(MessageForm);
+export default graphql(createMessage, { name: 'createMessage' })(withApollo(MessageForm));

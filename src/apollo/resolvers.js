@@ -1,5 +1,7 @@
 export const defaults = {
-  currentUser: null
+  username: null,
+  userId: null,
+  message: null
 };
 
 export const resolvers = {

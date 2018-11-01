@@ -19,9 +19,15 @@ class App extends Component {
 
     if (token) {
       const decodedToken = jwtDecode(token);
-      this.props.client.cache.writeData({
-        data: { currentUser: { ...decodedToken.user, __typename: 'User' } }
-      });
+      if (decodedToken.user) {
+        this.props.client.cache.writeData({
+          data: {
+            username: decodedToken.user.username,
+            userId: decodedToken.user.discordId
+          }
+        });
+
+      }
     }
   }
 
