@@ -25,12 +25,13 @@ const createMessage = gql`
 class MessageForm extends Component {
   submitForm(e) {
     e.preventDefault();
+    console.log(this.props.client.cache.data.data.ROOT_QUERY);
     this.props.createMessage({
       variables: {
         content: this.props.client.cache.data.data.ROOT_QUERY.message,
         userId: this.props.client.cache.data.data.ROOT_QUERY.userId,
-        channelId: '496750314205085726',
-        guildId: 'blah'
+        channelId: this.props.client.cache.data.data.ROOT_QUERY.channelId,
+        guildId: this.props.client.cache.data.data.ROOT_QUERY.guildId
       }
     });
   }

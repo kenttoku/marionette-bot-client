@@ -1,7 +1,9 @@
 export const defaults = {
+  message: null,
   username: null,
   userId: null,
-  message: null
+  channelId: null,
+  guildId: null
 };
 
 export const resolvers = {

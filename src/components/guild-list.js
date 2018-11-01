@@ -1,5 +1,5 @@
-import React from 'react';
-import { graphql } from 'react-apollo';
+import React, { Component } from 'react';
+import { graphql, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const getGuildsQuery = gql`
@@ -15,7 +15,19 @@ const getGuildsQuery = gql`
   }
 `;
 
-class GuildList extends React.Component {
+class GuildList extends Component {
+  selectGuild(guildId) {
+    this.props.client.cache.writeData({
+      data: { guildId }
+    });
+  }
+
+  selectChannel(channelId) {
+    this.props.client.cache.writeData({
+      data: { channelId }
+    });
+  }
+
   displayGuilds() {
     const data = this.props.data;
     if (data.loading || !data.guilds) {
@@ -23,7 +35,10 @@ class GuildList extends React.Component {
     } else {
       return data.guilds.map(guild => {
         return (
-          <li key={`guild-${guild.discordId}`}>{guild.name}
+          <li
+            key={`guild-${guild.discordId}`}
+            onClick={() => this.selectGuild(guild.discordId)}
+          >{guild.name}
             <ul>{this.displayChannels(guild)}</ul>
           </li>
         );
@@ -34,7 +49,10 @@ class GuildList extends React.Component {
   displayChannels(guild) {
     return guild.channels.map(channel => {
       return (
-        <li key={`channel-${channel.discordId}`}>{channel.name}</li>
+        <li
+          key={`channel-${channel.discordId}`}
+          onClick={() => this.selectChannel(channel.discordId)}
+        >{channel.name}</li>
       );
     });
   }
@@ -48,4 +66,4 @@ class GuildList extends React.Component {
   }
 }
 
-export default graphql(getGuildsQuery)(GuildList);
+export default graphql(getGuildsQuery)(withApollo(GuildList));
