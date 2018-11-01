@@ -3,12 +3,6 @@ export const defaults = {
 };
 
 export const resolvers = {
-  Mutation: {
-    setUser: (_, { user }, { cache }) => {
-      const data = { user, __typename: 'User' };
-      cache.writeData({ data });
-    }
-  }
 };
 
 export const typeDefs = `

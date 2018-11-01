@@ -5,6 +5,7 @@ import { withApollo } from 'react-apollo';
 import { Link, Route } from 'react-router-dom';
 import { loadAuthToken, saveAuthToken } from '../local-storage';
 import GuildList from './guild-list';
+import MessageForm from './message-form';
 
 class App extends Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ class App extends Component {
         <hr/>
         <Link to="/guilds">Test</Link>
         <Route path="/guilds" component={GuildList} />
+        <Route path="/guilds" component={MessageForm} />
       </div>
     );
   }
