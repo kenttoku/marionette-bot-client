@@ -6,7 +6,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
 
 import { API_BASE_URL } from '../config';
-import { resolvers, defaults, typeDefs } from './resolvers';
+import { defaults } from './resolvers';
 
 const cache = new InMemoryCache();
 
@@ -24,7 +24,7 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const stateLink = withClientState({ cache, resolvers, defaults, typeDefs });
+const stateLink = withClientState({ cache, defaults });
 
 const client = new ApolloClient({
   link: ApolloLink.from([stateLink, authLink.concat(httpLink)]),

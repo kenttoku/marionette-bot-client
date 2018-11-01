@@ -5,13 +5,3 @@ export const defaults = {
   channelId: null,
   guildId: null
 };
-
-export const resolvers = {
-};
-
-export const typeDefs = `
-  type User {
-    username: String!
-    discordId: String!
-  }
-`;

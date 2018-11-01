@@ -4,12 +4,14 @@ import gql from 'graphql-tag';
 
 const getGuildsQuery = gql`
   {
-    guilds {
-      name
-      discordId
-      channels {
+    user(where:{}) {
+      guilds {
         name
         discordId
+        channels {
+          name
+          discordId
+        }
       }
     }
   }
@@ -30,10 +32,10 @@ class GuildList extends Component {
 
   displayGuilds() {
     const data = this.props.data;
-    if (data.loading || !data.guilds) {
+    if (data.loading || !data.user) {
       return (<li>Loading...</li>);
     } else {
-      return data.guilds.map(guild => {
+      return data.user.guilds.map(guild => {
         return (
           <li
             key={`guild-${guild.discordId}`}
