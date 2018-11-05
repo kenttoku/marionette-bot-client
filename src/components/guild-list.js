@@ -86,6 +86,7 @@ class GuildList extends Component {
     return (
       <div>
         {selection}
+        <div>Choose guild/channel</div>
         <ul id="guild-list">
           {this.displayGuilds()}
         </ul>
