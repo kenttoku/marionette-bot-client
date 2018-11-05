@@ -25,7 +25,6 @@ const createMessage = gql`
 class MessageForm extends Component {
   submitForm(e) {
     e.preventDefault();
-    console.log(this.props.client.cache.data.data.ROOT_QUERY);
     this.props.createMessage({
       variables: {
         content: this.props.client.cache.data.data.ROOT_QUERY.message,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
+import MessageForm from './message-form';
 
 const getGuildsQuery = gql`
   {
@@ -32,8 +33,10 @@ class GuildList extends Component {
 
   displayGuilds() {
     const data = this.props.data;
-    if (data.loading || !data.user) {
+    if (data.loading) {
       return (<li>Loading...</li>);
+    } else if (!data.user) {
+      return (<a href="http://localhost:8080/auth/discord">Sign In With Discord</a>);
     } else {
       return data.user.guilds.map(guild => {
         return (
@@ -60,10 +63,14 @@ class GuildList extends Component {
   }
 
   render() {
+    const form = this.props.data.user ? <MessageForm /> : '';
     return (
-      <ul id="guild-list">
-        {this.displayGuilds()}
-      </ul>
+      <div>
+        <ul id="guild-list">
+          {this.displayGuilds()}
+        </ul>
+        {form}
+      </div>
     );
   }
 }

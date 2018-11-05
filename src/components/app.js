@@ -2,10 +2,9 @@ import jwtDecode from 'jwt-decode';
 import queryString from 'query-string';
 import React, { Component } from 'react';
 import { withApollo } from 'react-apollo';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { loadAuthToken, saveAuthToken } from '../local-storage';
 import GuildList from './guild-list';
-import MessageForm from './message-form';
 
 class App extends Component {
   componentDidMount() {
@@ -34,11 +33,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <a href="http://localhost:8080/auth/discord">Sign In With Discord</a>
-        <hr/>
-        <Link to="/guilds">Test</Link>
-        <Route path="/guilds" component={GuildList} />
-        <Route path="/guilds" component={MessageForm} />
+        <Route path="/" component={GuildList} />
       </div>
     );
   }
