@@ -27,20 +27,14 @@ class MessageForm extends Component {
     e.preventDefault();
     e.target.reset();
 
-    const disabled = !this.props.client.cache.data.data.ROOT_QUERY.channelId
-    || this.props.client.cache.data.data.ROOT_QUERY.guildId
-    || this.props.client.cache.data.data.ROOT_QUERY.message;
-
-    if (!disabled) {
-      this.props.createMessage({
-        variables: {
-          content: this.props.client.cache.data.data.ROOT_QUERY.message,
-          userId: this.props.client.cache.data.data.ROOT_QUERY.userId,
-          channelId: this.props.client.cache.data.data.ROOT_QUERY.channelId,
-          guildId: this.props.client.cache.data.data.ROOT_QUERY.guildId
-        }
-      });
-    }
+    this.props.createMessage({
+      variables: {
+        content: this.props.client.cache.data.data.ROOT_QUERY.message,
+        userId: this.props.client.cache.data.data.ROOT_QUERY.userId,
+        channelId: this.props.client.cache.data.data.ROOT_QUERY.channelId,
+        guildId: this.props.client.cache.data.data.ROOT_QUERY.guildId
+      }
+    });
   }
 
   changeMessage(e) {
