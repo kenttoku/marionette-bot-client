@@ -25,8 +25,6 @@ const createMessage = gql`
 class MessageForm extends Component {
   submitForm(e) {
     e.preventDefault();
-    e.target.reset();
-
     this.props.createMessage({
       variables: {
         content: this.props.client.cache.data.data.ROOT_QUERY.message,
@@ -35,6 +33,8 @@ class MessageForm extends Component {
         guildId: this.props.client.cache.data.data.ROOT_QUERY.guildId
       }
     });
+
+    e.target.reset();
   }
 
   changeMessage(e) {
