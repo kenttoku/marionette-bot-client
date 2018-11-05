@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { withApollo } from 'react-apollo';
 import { Route } from 'react-router-dom';
-import { loadAuthToken, saveAuthToken, clearAuthToken } from '../local-storage';
+import { loadAuthToken, saveAuthToken } from '../local-storage';
 import GuildList from './guild-list';
 
 class App extends Component {
