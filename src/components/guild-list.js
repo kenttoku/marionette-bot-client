@@ -19,16 +19,18 @@ const getGuildsQuery = gql`
 `;
 
 class GuildList extends Component {
-  selectGuild(guildId) {
+  selectGuild(guildId, guildName) {
     this.props.client.cache.writeData({
-      data: { guildId }
+      data: { guildId, guildName }
     });
+    this.forceUpdate();
   }
 
-  selectChannel(channelId) {
+  selectChannel(channelId, channelName) {
     this.props.client.cache.writeData({
-      data: { channelId }
+      data: { channelId, channelName }
     });
+    this.forceUpdate();
   }
 
   displayGuilds() {
@@ -42,7 +44,7 @@ class GuildList extends Component {
         return (
           <li
             key={`guild-${guild.discordId}`}
-            onClick={() => this.selectGuild(guild.discordId)}
+            onClick={() => this.selectGuild(guild.discordId, guild.name)}
           >{guild.name}
             <ul>{this.displayChannels(guild)}</ul>
           </li>
@@ -56,7 +58,7 @@ class GuildList extends Component {
       return (
         <li
           key={`channel-${channel.discordId}`}
-          onClick={() => this.selectChannel(channel.discordId)}
+          onClick={() => this.selectChannel(channel.discordId, channel.name)}
         >{channel.name}</li>
       );
     });
@@ -64,8 +66,11 @@ class GuildList extends Component {
 
   render() {
     const form = this.props.data.user ? <MessageForm /> : '';
+    const channelName = this.props.client.cache.data.data.ROOT_QUERY.channelName;
+    const guildName = this.props.client.cache.data.data.ROOT_QUERY.guildName;
     return (
       <div>
+        <div>Selected: {guildName} - {channelName}</div>
         <ul id="guild-list">
           {this.displayGuilds()}
         </ul>

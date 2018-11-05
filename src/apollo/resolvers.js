@@ -3,5 +3,7 @@ export const defaults = {
   username: null,
   userId: null,
   channelId: null,
-  guildId: null
+  channelName: null,
+  guildId: null,
+  guildName: null
 };
