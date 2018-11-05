@@ -27,19 +27,20 @@ class App extends Component {
         });
 
       }
+    } else {
+      this.props.client.cache.writeData({
+        data: {
+          username: null,
+          userId: null
+        }
+      });
     }
-  }
-
-  logOut() {
-    clearAuthToken();
-    this.forceUpdate();
   }
 
   render() {
     return (
       <div className="app">
         <Route path="/" component={GuildList} />
-        <button onClick={() => this.logOut()}>Log out</button>
       </div>
     );
   }

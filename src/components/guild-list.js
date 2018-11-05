@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { graphql, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import MessageForm from './message-form';
+import { clearAuthToken } from '../local-storage';
+import { AUTH_URL } from '../config';
 
 const getGuildsQuery = gql`
   {
@@ -38,7 +40,7 @@ class GuildList extends Component {
     if (data.loading) {
       return (<li>Loading...</li>);
     } else if (!data.user) {
-      return (<a href="http://localhost:8080/auth/discord">Sign In With Discord</a>);
+      return (<a href={`${AUTH_URL}/auth/discord`}>Sign In With Discord</a>);
     } else {
       return data.user.guilds.map(guild => {
         return (
@@ -64,17 +66,31 @@ class GuildList extends Component {
     });
   }
 
+  logOut() {
+    clearAuthToken();
+    this.props.client.cache.writeData({
+      data: {
+        username: null,
+        userId: null
+      }
+    });
+    window.location.reload();
+  }
+
   render() {
     const form = this.props.data.user ? <MessageForm /> : '';
     const channelName = this.props.client.cache.data.data.ROOT_QUERY.channelName;
     const guildName = this.props.client.cache.data.data.ROOT_QUERY.guildName;
+    const selection = this.props.data.user ? <div>Selected: {guildName} - {channelName}</div> : '';
+    const logOutButton = this.props.data.user ? <button onClick={() => this.logOut()}>Log out</button> : '';
     return (
       <div>
-        <div>Selected: {guildName} - {channelName}</div>
+        {selection}
         <ul id="guild-list">
           {this.displayGuilds()}
         </ul>
         {form}
+        {logOutButton}
       </div>
     );
   }
