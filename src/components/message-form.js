@@ -25,14 +25,22 @@ const createMessage = gql`
 class MessageForm extends Component {
   submitForm(e) {
     e.preventDefault();
-    this.props.createMessage({
-      variables: {
-        content: this.props.client.cache.data.data.ROOT_QUERY.message,
-        userId: this.props.client.cache.data.data.ROOT_QUERY.userId,
-        channelId: this.props.client.cache.data.data.ROOT_QUERY.channelId,
-        guildId: this.props.client.cache.data.data.ROOT_QUERY.guildId
-      }
-    });
+    e.target.reset();
+
+    const disabled = !this.props.client.cache.data.data.ROOT_QUERY.channelId
+    || this.props.client.cache.data.data.ROOT_QUERY.guildId
+    || this.props.client.cache.data.data.ROOT_QUERY.message;
+
+    if (!disabled) {
+      this.props.createMessage({
+        variables: {
+          content: this.props.client.cache.data.data.ROOT_QUERY.message,
+          userId: this.props.client.cache.data.data.ROOT_QUERY.userId,
+          channelId: this.props.client.cache.data.data.ROOT_QUERY.channelId,
+          guildId: this.props.client.cache.data.data.ROOT_QUERY.guildId
+        }
+      });
+    }
   }
 
   changeMessage(e) {
@@ -46,7 +54,7 @@ class MessageForm extends Component {
       <form onSubmit={e => this.submitForm(e)}>
         <label htmlFor="message">Message</label>
         <input type="text" id="message" onChange={e => this.changeMessage(e)} />
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={false}>Submit</button>
       </form>
     );
   }
